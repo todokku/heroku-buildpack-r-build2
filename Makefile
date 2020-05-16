@@ -44,6 +44,7 @@ tk$(TCLTK_VERSION)-src.tar.gz:
 
 	# build R binaries
 	docker build --tag $(BUILD_IMAGE) \
+							 --build-arg HEROKU_STACK=$(HEROKU_STACK) \
 							 --build-arg UBUNTU_IMAGE=$(UBUNTU_IMAGE) \
 							 --build-arg R_VERSION=$(R_VERSION) \
 							 --file Dockerfile.build .

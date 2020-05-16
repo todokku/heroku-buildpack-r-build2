@@ -1,6 +1,7 @@
 ARG UBUNTU_IMAGE
 FROM $UBUNTU_IMAGE
 
+ARG HEROKU_STACK
 ARG R_VERSION
 
 # set default locale
@@ -107,6 +108,9 @@ RUN cd R-$R_VERSION \
 # copy binary dependencies to ../R/lib
 COPY scripts/copy_libs.rb .
 RUN ruby copy_libs.rb
+
+# copy libfakeroot binary
+COPY lib/libfakechroot-Ubuntu-${HEROKU_STACK}-x86_64.so /app/R/lib/libfakechroot.so
 
 # copy helpers and profile
 COPY scripts/helpers.R /app/R/etc/helpers.R
