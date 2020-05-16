@@ -12,7 +12,7 @@ addons:
 
 env:
   global:
-    - BUILDPACK_VERSION="test-$TRAVIS_BUILD_NUMBER"
+    - BUILDPACK_VERSION="test/build-$TRAVIS_BUILD_NUMBER"
   matrix:
     - HEROKU_STACK=16
     - HEROKU_STACK=18
