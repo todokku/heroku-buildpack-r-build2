@@ -1,0 +1,24 @@
+diff --git a/src/library/base/R/files.R b/src/library/base/R/files.R
+index 2ab4f30..ec1f530 100644
+--- a/src/library/base/R/files.R
++++ b/src/library/base/R/files.R
+@@ -224,8 +224,17 @@ Sys.sleep <- function(time)
+ path.expand <- function(path)
+     .Internal(path.expand(path))
+
+-Sys.glob <- function(paths, dirmark = FALSE)
+-    .Internal(Sys.glob(path.expand(paths), dirmark))
++chroot_app_dir <- Sys.getenv("R_CHROOT_APP_DIR")
++if (is.empty(chroot_app_dir)) {
++    Sys.glob <- function(paths, dirmark = FALSE)
++        .Internal(Sys.glob(path.expand(paths), dirmark))
++}
++else {
++    Sys.glob <- function(paths, dirmark = FALSE) {
++      globpaths <- .Internal(Sys.glob(path.expand(paths), dirmark))
++      return(sub(sprintf("^%s", chroot_app_dir), "/app", globpaths))
++  }
++}
+
+ unlink <- function(x, recursive = FALSE, force = FALSE)
+     .Internal(unlink(as.character(x), recursive, force))

@@ -82,7 +82,10 @@ RUN tar xzf R-$R_VERSION.tar.gz \
 
 # https://cran.r-project.org/doc/manuals/R-admin.html#Installing-R-under-Unix_002dalikes
 
+COPY scripts/files.R.patch .
+
 RUN cd R-$R_VERSION \
+ && patch -p1 < ../files.R.patch \
  && export DEBIAN_FRONTEND=noninteractive \
  && export AWK=/usr/bin/awk \
  && export LIBnn=lib \
